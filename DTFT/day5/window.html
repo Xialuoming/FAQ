@@ -1,0 +1,27 @@
+<html>
+<head>
+	<h1>Title of this page.</h1>
+	<script>
+		function change()
+		{
+			var paragraph1 = document.getElementById("p1");
+			var parent = paragraph1.parentNode;
+			// var Content = paragraph1.innerHTML; 可有可无
+
+			parent.setAttribute("bgcolor","blue");
+			// parent.bgcolor = "blue"; 未成功
+			paragraph1.innerHTML = "第三段";
+
+		}
+	</script>
+</head>
+<body>
+	<table id="container" border="1" bgcolor="pink" cellpadding="2" cellspacing="2">
+		<tr>
+			<td class="emph" id="p1">第一段</td>
+			<td class="normal">第二段</td>
+		</tr>
+	</table>
+	<button type="button" onclick="change();">Try it</button>
+</body>
+</html>

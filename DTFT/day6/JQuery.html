@@ -1,0 +1,41 @@
+<html>
+<head>
+	<script>
+		function showFinish()
+		{
+			window.alert('The load is OK！');
+			var x = document.getElementById("haha");
+			x.innerHTML = "Hello! You are great!";
+		}
+
+		function change()
+		{
+			var paragraph1 = document.getElementById("p1");
+			var parent = paragraph1.parentNode;
+			// var Content = paragraph1.innerHTML; 可有可无
+
+			parent.setAttribute("bgcolor","blue");
+			// parent.bgcolor = "blue"; 未成功
+			paragraph1.innerHTML = "666";
+
+		}
+	</script>
+
+	<script type="text/javascript"
+	src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js">
+	</script>
+</head>
+<body onload="showFinish();">
+	<table id="container" border="1" bgcolor="pink" cellpadding="2" cellspacing="2">
+		<tr>
+			<td class="emph" id="p1">第一段</td>
+			<td class="normal">第二段</td>
+		</tr>
+	</table>
+	<div id="haha">12345</div>
+	<button type="button" ondblclick="change();">Try it</button>
+	<p id="message">Click the button to hide me</p>
+	<p id="message2">123</p>
+	<button type="button" onclick="$('p#message').slideToggle()">hide</button>
+</body>
+</html>

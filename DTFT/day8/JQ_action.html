@@ -1,0 +1,45 @@
+<script>
+	var newObject = document.createElement("p");
+	newObject.innerHTML = '这是一个新增的段落！';
+
+	$("div").prepend(newObject);
+
+	$("#submit").remove();
+</script>
+
+
+<script>
+	$(document).ready(function(){
+		alert("文档全部加载完成！")；
+	})；
+
+	$("a").mouseleave(function(){
+		alert("鼠标已经离开<a>标记")；
+	})；
+</script>
+
+<script>
+	var top = $("#mainFrame").parent();
+
+	var middle = $("#mainFrame").parentsUntil("body");
+
+	var child1 = $("#mainFrame").children().first();
+</script>
+
+<script>
+	$("button").hide();
+
+	$("button").fadeTo("slow", 0.5, function(){
+		alert("渐变已经完成");
+	});
+
+	$("p").animate({
+		left:'100px',
+		width:'650px'
+	},
+	"fast",function(){
+		alert("自定义动画完成")；
+	})；
+
+	$("#paragraph1").stop();
+</script>

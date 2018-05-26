@@ -1,0 +1,92 @@
+INSERT INTO table_name (列名1, 列名2, ...)
+VALUES (值1, 值2, ...)
+
+INSERT INTO course(id, title, period, description)
+VALUES (1, '经济学基础', 320, '经济系学生必修课')
+
+INSERT INTO course
+VALUES (1, '经济学基础', 320, '经济系学生必修课')
+
+INSERT INTO course(title, period, id, description)
+VALUES ('经济学基础', 320, 1, '经济系学生必修课')
+
+INSERT INTO course(title, period, id)
+VALUES ('经济学基础', 320, 1)    //description 为表定义时默认值，如没有，则为NULL
+
+
+
+DELETE FROM table_name
+WHERE 条件表达式
+
+DELETE FROM course
+WHERE id = 1
+
+DELETE FROM course
+WHERE title like '经济学%' AND period < 200 OR period > 600
+
+
+
+UPDATE　table_name
+SET 列名1 = 新值, 列名2 = 新值, ...
+WHERE 条件表达式
+
+UPDATE student SET age = 18
+
+UPDATE student
+SET age = age + 1, parent = '未知'
+WHERE parent IS NULL
+
+
+SELETE [distinct|top] 列名1, 列名2...
+FROM table_name
+[WHERE 条件表达式]
+[GROUP BY 分组列
+[HAVING 分组筛选条件表达式]
+]
+[ORDER BY 列名1 [ASC|DESC], 列名2 [ASC|DESC]]
+
+
+SELETE * FROM course
+
+SELETE distinct period FROM course
+
+SELETE top 10 * FROM course
+WHERE period > 200
+
+SELETE AVG(period)
+FROM course
+
+SELETE period, COUNT(*)
+FROM course
+GROUP BY period
+HAVING count(*) > 3
+
+SELETE * FROM course
+ORDER BY id desc
+
+SELETE 列名1, 列名2...
+FROM table_name1 JOIN table_name2 ON 连接表达式
+WHERE ...
+
+SELETE teacher.*
+FROM teacher INNER JOIN course on teacher.course_id = course.id
+WHERE teacher.gender = True
+
+SELETE distinct course.title
+FROM course INNER JOIN enroll on course.id = enroll.course_id
+INNER JOIN student on enroll.student_id = student.student_id
+WHERE student.age = 18
+
+
+SQLAlchemy
+
+session.query(Account).filter(Account.user_name = 'yuanjian')
+session.query(Account).filter(Account.title.like(yuan%))
+session.query(Account).filter(~Account.if.in_([1,3,5]))
+session.query(Account).filter(Account.salary == None)
+session.query(Account).filter(Account.salary is_(None))
+session.query(Account).filter(Account.salary isnot(None))
+session.qurey(Account).filter(Account.title=='Engineer', Account.salary==3000)
+session.qurey(Account).filter(and_(Account.title=='Engineer', Account.salary==3000))
+session.qurey(Account).filter(Account.title=='Engineer').filter(Account.salary==3000)
+session.qurey(Account).filter(or_(Account.title=='Engineer', Account.salary==3000))
