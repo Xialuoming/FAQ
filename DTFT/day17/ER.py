@@ -12,7 +12,7 @@ class Class(Base):
 	address = Column(String(50))
 
 	class_teachers = relationship("ClassTeacher",backref='class')
-	students = relationship("Student", backref='class')
+	students = relationship("Student", backref='class', cascade='delete')
 
 
 class Student(Base):

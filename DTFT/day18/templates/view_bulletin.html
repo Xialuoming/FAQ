@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% from "utils.html" import render_field %}
+<form action="" method="post" name="view_bulletin" enctype="multipart/form-data">
+	{{ form.hidden_tag() }}
+
+	<div class="row">
+		<div class="col-lg-10 col-xs-10">
+			{{ render_field(form.title, size=120) }}
+		</div>
+		<div class="col-lg-4 col-xs-10">
+			{{ render_field(form.source, size=50) }}
+		</div>
+		<div class="col-lg-4 col-xs-10">
+			{{ render_field(form.author, size=50)}}
+		</div>
+		<div class="col-lg-4 col-xs-10">
+			{{ render_field(form.dt) }}
+		</div>
+		<div class="col-lg-10 col-xs-10">
+			{{ render_field(form.content, rows="4", cols="120") }}
+		</div>
+		<div class="col-lg-5 col-xs-10">
+			{{ render_field(form.image, accept="image/png, image/jpeg") }}
+			<p><input type="submit" value="上传" name="upload">上传图片分辨率为400*500</p>
+		</div>
+	</div>
+	<p><input type="submit" value='新建公告' name="confirm"></p>
+</form>
+{% endblock %}

@@ -187,3 +187,11 @@
 #mysql 启动
 #mysqld --skip-grant-tables
 #mysql -u root -p
+
+
+#级联 cascade
+# save-update merge expunge delete delete-orphan refresh-expire all
+#默认情况下 relationship的级联属性被设置为 cascade="save-update,merge"
+
+#WTForm
+#WForm类 一系列Field Validator
