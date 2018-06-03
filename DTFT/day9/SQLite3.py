@@ -1,8 +1,6 @@
-# import sqlite3
+import sqlite3
 
-# conn = sqlite3.connect('test.db')
-import MySQLdb
-conn = MySQLdb.connect(host='127.0.0.1',user='root',passwd='root123',db='yuanjian',port=3306)
+conn = sqlite3.connect('test.db')
 cur = conn.cursor()
 
 cur.execute("CREATE TABLE demo(num int,str varchar(20));")

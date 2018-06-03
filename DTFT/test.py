@@ -65,3 +65,8 @@ import time
 
 a = time.time()
 print (a) 
+
+class a(object):
+	print ('111111')
+
+b = a()

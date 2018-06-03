@@ -1,22 +1,16 @@
 #enumerate()生成带索引的迭代序列
-
-
 # sys.argv中的第一个值（索引为0）是Python程序名（day1.py）,
 默认为[],长度为1,从第二个值开始其他元素为字符串类型的控制台输入参数
 #元组变长参数：*，适用于未知参数数量不固定，且函数使用这些参数时无须知道参数的名字的场合
 #字典变长参数：**，适用于未知参数数量不固定，且函数使用这些参数时需要知道参数的名字的场合
 #has_key() 为Python2 独有函数
 #reduce python2函数
-
-
 #自定义异常的编程方法是建立一个继承自系统异常的子类(MyError(Exception))并且在需要引发该异常时用raise语句抛出该异常(raise MyError())
 #Python中类的构造函数用__init__命名
 #构造函数在MyClass被实例化时被python解释器自动调用
 #构造函数中不能有返回值
 #用del释放对象时析构函数自动被调用(def __del__(self):)
 #实例成员变量，类成员变量
-
-
 #@staticmethod 静态函数可以直接通过类名访问类成员变量
 #classmethod 类函数第一个参数必须为隐性参数cls,在类函数中
 #可以用cls代替类名本身
@@ -24,6 +18,7 @@
 #子类函数用super关键字可以访问父类成员，引用方法为：
 #super(SubClassName,self)
 #Class Sub(BaseC, BaseB):  ->Sub BaseC BaseA(C继承A) BaseB
+
 #URL标准形式： 
 #[协议]://[域名/ip]:[端口号]/[路径]？[参数]&[参数]
 #http://www.mysite.edu:80/app/search.html?page=1&name=david
@@ -32,7 +27,6 @@
 #为操作系统的用户空间提供网络抽象
 #socket使用IP地址+端口+协议的三元组唯一标识一个通信链路，可以对应多个客户端
 #当主机上存在多个IP时，绑定地址0.0.0.0可以监听所有这些可用的IP
-
 
 #HTML:超文本标记语言
 # &nbsp  空格 <hr/> 横线 
@@ -70,8 +64,6 @@
 #while (expression){...;}
 #do {...;}while(expression)
 #DOM：页面文档对象模型
-
-
 #查找节点
 #getElementById(id):返回对拥有指定id的第一个对象的引用
 #getElementByName(name):返回带有指定名称的对象集合
@@ -89,16 +81,13 @@
 #obj.setAttribute()
 #访问及修改节点的内容
 #obj.innerHTML
-
 #window子对象：document、history、location、navigator、screen
 #HTML事件处理： <tag onevent="javascript;" \>
 #JQuary $(selector).action()
-
 #标记内容操作
 #.text() .html() .var() . attr("attr_name") .css("property_name")
 #标记新增与删除
 #.append() .prepend() .after() .before() .remove() .empty()
-
 #事件响应
 #$(selector).EVENT(function(){
 	//事件处理代码
@@ -109,6 +98,7 @@
 .slideDown()/.slideUp() .slideToggle()
 .animate({params},speed,callback)
 .stop()
+
 
 #E-R图： 实体 实体属性 关系
 #关系表设计：1:1 1：N M：N
@@ -142,6 +132,7 @@
 #WSGI接口 web server gateway interface
 #一个是与Web服务器的接口
 #一个与服务器端程序的接口
+
 #Flask sqlalchemy Flask-WTForm
 #render_template
 #Markup 转换变量中的特殊字符 < > / 空格等
