@@ -1,0 +1,198 @@
+Django组成：
+  管理工具：一套内置的创建站点、迁移数据、维护静态文件的命令工具
+  模型：提供数据访问接口和模块，包括数据字段、元数据、数据关系等的定义及操作
+  视图：Django的视图层封装了HTTP Request和Response的一系列数据和操作流，
+ 	其主要功能包括URL映射机制、绑定模板等
+  模板：是一套Django自己的页面渲染模板语言，用若干内置的tags和filters定义页面
+    的生成方式
+  表单：通过内置的数据类型和控件生成HTML表单
+  管理站：通过声明需要管理的model,快速生成后台数据管理网站
+
+  创建项目： django-admin startproject djangosite
+  manage.py:是Django用于管理本项目的命令行工具，之后进行站点运行、数据库自动
+  	生成、静态文件收集等都要通过该文件完成
+  内层djangosite：目录中包含了本项目的实际文件，同时因为其中包含__init__.py
+  	文件,所以该目录是个python包
+  djangosite/__init__.py：告诉python该目录是一个python包
+  djangosite/settings.py：Django的项目配置文件。 
+  djangosite/urls.py：维护项目的url路由映射,默认只定义了/admin
+  djangosite/wsgi.py：定义WSGI的接口信息,用于与其他Web服务器集成，一般本文件在生成后无需改动
+
+  建立应用： python manage.py startapp app 
+  	__init__.py：使app为一个python包
+  	admin.py:管理站点模型的生成文件,默认为空
+  	apps.py:应用信息定义文件。在其中生成了类APPconfig,该类用于定义应用名等Meta数据
+  	migrations包：用于在之后定义引用迁移功能
+  	models.py :添加模型层数据类的文件
+  	test.py:测试代码文件
+  	views.py:定义url响应函数
+
+  1 在views创建路由响应函数
+  2* 新建urls.py
+  3 在项目URL文件的urlpatterns增加对应用app中的url.py文件的引用的声明
+  4 运行 python manage.py runserver 0.0.0.0:8001 
+  0.0.0.0: 绑定本机的所有IP
+
+  模型类：
+  1 配置项目INSTALLED_APPS
+  2 模型定义
+  3 生成数据移植文件
+  4 移植到数据库
+
+  表单视图：
+  1* 定义表单类
+  2 修改模型类
+  3* 开发模板文件
+  4 开发视图
+
+  使用管理界面
+
+
+  Django 模型层
+  是Django框架自定义的一套独特的ORM技术
+  ***************************************************************************
+  基本操作
+  1 模型类定义
+    所有Django模型都继承自django.db.models.Model类
+    通过其中的类属性定义模型字段，模型字段必须是某种models.XXField类型
+    通过模型类中的Meta子类定义模型元数据
+    Meta:
+      abstract app_label db_table db_tablespace(Oracle) default_related_name
+      get_latest_by managed order_with_respect_to ordering default_permissions
+      proxy requires_db_features required_dv_vendor unique_together
+      index_together verbose_name verbose_name_plural
+  2 普通字段类型
+      AutoField BigIntegerField BinaryField BooleanField CharField TextField
+      CommaSeparatedIntegerField DateField DateTimeField DurationField EmailField 
+      FileField FilePathField FloatField ImageField IntegerField IPAddressField
+      NullBooleanField PhoneNumberField PositiveIntegerField SlugField 
+      SmallIntegerField TimeField URLField USStateField XMLField
+  3 常用字段参数
+      primary_key null blank choice default help_text unique 
+      无名参数：‘请为本条信息评级’
+  4 基本查询
+    Model.objects.all() Model.objects.filter(**kwargs) Model.objects.exclude(**kwargs)
+
+    field lookup: 字段名称__谓词
+    谓词：
+    exact iexact contains in gt gte lt lte startswith endswith range year month day
+    week_day isnull
+
+    Comment.objects.all()[:10]
+    Comment.objects.order_by('headline')
+  5 数据保存与删除 
+    newObj.save()
+    Comment.objects.filter(pub_date__year=2018).delete()
+    **************************************************************************
+
+  关系操作
+  1 一对一关系
+  models.OneToOneField()的第1个参数定义被关联的模型名
+  on_delete 参数定义当被关联模型的记录被删除时本模型的记录如何处理，models.CASCADE用于定义
+  此时本记录也被删除
+  __unicode__()函数用于定义模型的显示字符串
+  2 一对多关系
+  models.ForeignKey()
+  XXXX_set 是Django设定的通过主模型对象访问附模型对象集合的属性名
+      a1 = Account(user_name = 'ROSE')
+      a1.save()
+      c1 = Contact(account=a1,mobile='13912345001')
+  3 多对多关系
+  用两个1:N关系定义M:N关系
+  在两个模型中任意一个定义models.ManyToManyField()
+      a1 = Account(user_name = 'ROSE')
+      a1.save()
+      c1 = Contact(mobile='13912345001')
+      c1.save()
+      c1.accounts.add(a1)
+      a2 = Account(user_name = 'Terry')
+      a2.save()
+      a2.contact_set.add(c1)
+      a1.contact_set.remove(c1)
+      a1.contact_set.clear()
+**************************************************************************
+  面向对象ORM
+  1 抽象类继承
+  作用是在多个表有相同字段时，可以使开发者将这些字段统一定义在抽象基类中，免于重复定义
+  抽象基类的定义是通过在模型的Meta中定义属性abstract=True来实现
+  子类可以直接引用父类的字段
+  2 多表继承
+  子类可以直接引用父类的字段，同时子类也可以通过父类对象引用访问父类实例
+  在多表继承时，在子类实例中通过小写的父类的名字可以引用父类的实例
+      m1.messagebase.content
+  3 代理模型继承
+  代理模型继承通过在子类模型的Meta中定义属性proxy=True来实现
+  代理模型继承中子类只负责管理数据，而不实际存储数据
+  子类中新的特性不会影响父类模型及其已有代码的行为
+******************************************************************************
+Django视图层
+主要工作是衔接HTTP请求、Python程序、HTML模板等。
+
+URL映射
+Django项目的入口配置，通过url指定用户的每一个后台访问的python处理函数是什么
+
+当多个url映射定义可以匹配同一个url地址时，Django会选取在urlpatterns列表中的第一个匹配的元素
+
+1 普通url映射
+    url()的第一个参数是HTTP路径，第二个参数是该路径被映射到的python函数名
+    函数url()的路径不包含网站的主机名
+    url(r'^year/([0-9]{4})/$', views.year_moments)
+2 正则表达式
+3 命名URL参数映射
+    命名URL参数的定义方式是 '?P<param_name>pattern'
+    url(r'^year/?P<year>([0-9]{4})/$', views.year_moments)    
+4 分布式url映射
+    Django中用include()函数提供了分布式URL映射的功能
+    url(r'^moments/', include('djangosite.app.urls'))
+5 反向解析
+    URL反向解析使得开发者可以用映射名代替很多需要写绝对URL路径的地方,提高代码的可维护性
+    模板文件中：{% url %}
+    python程序中： django.core.urlresolvers.reverse()
+6 带参数的反向解析
+模板文件中：{% url 'moments', 2018 %}
+python程序中： HttpResponseRedirect(reverse('moments',args=(1028,)))
+*************************************************************************************
+视图函数
+是django开发者处理HTTP请求的Python函数
+通过模型层对象处理数据，用如下的某种方式返回HTTP Response
+    直接构造HTTP Body
+    用数据渲染HTML模板文件
+    如果游逻辑错误，则返回HTTP错误或其他状态
+1 直接构造HTML页面
+    直接在视图函数中构造返回给客户端的字符串，通过HttpResponse()函数封装后返回
+2 用数据渲染HTML模板文件
+    模板渲染通过django.shortcuts.render()函数实现
+    render()函数的第一个参数是HTTP request,第二个参数是模板文件名，第三个参数是以字典
+  形式表达的模板参数
+3 返回HTTP错误
+    status
+    return HttpResponse(status=404)
+    return HttpResponseRedirect()
+    HttpReponseNotModified HttpResponsePermanentRedirect
+    HttpResponseBadRequest HttpResponseForbidden
+    HttpResponseNotAllowed HttpResponseServerError
+**************************************************************************
+模板语法
+模板文件主要由目标文件的内容组成（比如HTML,CSS），辅以模板的特殊语法用于替换动态内容
+1 变量替换
+{{ variable }}
+2 过滤器
+变量与过滤器之间用管道符号'|'连接 {{objects|filter:param}}
+  add addslashes capfirst center cut date default default_if_none dictsort
+  dictsortreversed divisibleby escape filesizeformat first floatformat:3
+  get_digit:"2" join length length_is linebreaks linebreaksbr linenumbers
+  ljust lower make_list pluralize random rjust slice slugify stringformat
+  time timesince timeuntil title truncatewords truncateword_html upper
+  urlencode urlize wordcount yesno
+3 流程控制
+Django模板提供基本的流程控制功能
+{% for %} {% endfor %}
+{% if %} {% elif %} {% else %} {% endif %}
+4 模板继承
+父模板文件：保存公共部分内容，指定页面整体框架，一般包括页面头、导航栏、页脚、ICP声明等
+{% block block_name %}...{% endblock %}
+子模板文件：用于扩展父模板文件，在其中编写每个页面自身的特有功能
+{% extends "base.html" %}
+用子模板文件中的块title、content的内容替换了父模板文件中相应块的内容
+由于父模板文件中存在sidebar，但是子模板文件中不存在，所以渲染结果用父模板文件中的sidebar的内容
+在子模板文件中定义了块new_block，但在父模板文件中没有定义该块，所以该块无法显示在最终的渲染结果中
