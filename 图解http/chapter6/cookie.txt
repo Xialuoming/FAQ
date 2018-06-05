@@ -1,0 +1,67 @@
+RFC2616定义的47种首部字段
+
+通用首部字段：请求报文和响应报文都会使用的首部
+Cache-Contron Connection Date Pragma Trailer 
+Transfer-Encoding Via Upgrade Warning
+
+请求首部字段：从客户端向服务器发送请求报文时使用的首部，补充了请求的
+附加内容、客户端信息、响应内容相关优先级等信息
+Accept Accept-Charset Accept-Encoding Accept-Language
+Authorization Expect From Host if-Match if-Modified-Since
+if-None-Match if-Range if-Unmodified-Since Max-Forwards
+Proxy-Authorization Range Referer TE User-Agent
+
+响应首部字段：从服务器向客户端发送响应报文时使用的首部，补充了响应的
+附加内容，也会要求客户端附加额外的内容信息
+Accept-Ranges Age Etag Location Proxy-Authenticate
+Retry-After Server Vary WWW-Authenticate
+
+实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源
+内容更新时间等与实体相关的信息
+Allow Content-Encoding Content-Language Content-Langth
+Content-Location Content-MD5 Content-Range Content-Type
+Expires Last-Modified
+
+非HTTP/1.1首部字段
+Cookie Set-Cookie Content-Dispostion
+
+
+端到端：End-to-end
+逐跳：Hop-by-hop
+Connection Keep-Alive Proxy-Authenticate Proxy-Authorization
+Tariler TE Transfer-Encoding Upgrade
+
+******************************************
+6.3 HTTP/1.1 
+通用首部字段
+	Cache-Control 控制缓存机制
+		表示是否能缓存的指令：public private no-cache
+		控制可执行缓存的对象的指令： no-store
+		指定缓存期限和认证的指令：s-maxage max-age min-fresh max-stale
+			only-if-cached must-revalidate proxy-revalidate no-transform
+	Connection 控制代理不再转发的首部字段；管理持久连接 Keep-Alive
+	Date 首部字段Date表明创建HTTP报文的日期和时间
+	Pragma  Pragma: no-cache
+	Trailer 报文末端的 首部 一览
+	Transfer_Encoding 用这种传输编码方式哦，用于分块传输编码
+	Upgrade 作用于客户端和相邻服务器，因此需加Connection：Upgrade ;101 switching Protocols
+	Via  追踪客户端与服务器之间的请求和响应报文的传输路径
+	Warning  Warning:[警告码][警告的主机]:[端口号] "[警告内容]"([警告日期])
+	110 代理返回过期的资源           111 代理再验证资源有效性时失败
+	112 代理与互联网连接被故意切断    113 响应的使用期超过有效缓存设定的时间
+	199 任意的警告内容  214 代理对内容编码或媒体类型等执行了某些处理  299 持久的任意警告内容
+请求首部字段
+	Accept ；q表权重 0-1
+		文本文件 text/html,text/plain,text/css,application/xhtml,application/xml...
+		图片文件 image/jpeg,image/gif,image/png...
+		视频文件 video/mpeg,video/quicktime
+		应用程序使用的二进制文件 application/octet-stream,application/zip
+	Accept-Charset 通知服务器用户代理支持的字符集及字符集相对的优先级顺序，用于服务器驱动协商
+	Accept-Encoding 通知服务器用户代理支持的内容编码及内容编码相对的优先级顺序
+		gzip compress deflate identity
+	Accept-Language 
+	Authorization 告知服务器用户代理的认证信息
+	Expect 告知服务器期望出现的某种特定行为
+	Form 告知服务器使用用户代理的用户的电子邮件地址
+	Host 告知服务器请求的资源所处的互联网主机名和端口号 必须要有的
+	If-Match 只有当If-Match的字段值跟ETag值匹配一致时，服务器才会接受请求 412 Precondition failed 

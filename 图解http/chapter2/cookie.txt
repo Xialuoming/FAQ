@@ -1,0 +1,33 @@
+HTTP是不保存状态的协议：为了快速处理大量事物，确保协议的可伸缩性
+
+但为了实现期望的保存状态功能，于是引入了cookie技术
+
+GET http://hackr.jp/index.html HTTP/1.1
+
+GET /index.html HTTP/1.1
+Host: hackr.jp
+
+*
+
+if-Modified-Since: Thu,12 Jul 2012 07:30:00 GMT
+Content-Length: 1560
+Content-Type: text.html
+Allow: GET,POST,HEAD,OPTIONS
+
+HEAD:用于确认URI的有效性及资源更新的日期等
+
+PUT/DELETE: 本身不带验证机制，配合Web应用程序的验证机制，或遵守REST标准时使用
+
+TRACE 追踪路径
+Max-Forwards:2
+
+CONNECT 要求用隧道协议连接代理
+CONNECT proxy.hackr.jp:8000 HTTP/1.1
+Host:proxy.hackr.jp
+
+keep-alive 
+持久连接旨在建立一次tcp连接后进行多次请求和响应的交互
+
+
+server: Apache
+set-cookie: sid=1342077140226724
